@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    color: #56423e;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    background: #fff;
+
+}
+
+section {
+    height: 100%;
+}
+
+section .container {
+    height: 100%;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    /* flex-direction: column; */
+}
+
+section .container .content {
+    width: 47vw;
+    height: 350px;
+    display: flex;
+    justify-content: center;
+}
+
+.name {
+    margin-top: 15px;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.card .card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    position: relative;
+    z-index: 100;
+}
+
+section .card .image {
+    height: 40vw;
+    width: 40vw;
+    max-width: 350px;
+    max-height: 350px;
+    border-radius: 40% 50% 40% 50%;
+    padding: 3px;
+    background: #f54837;
+}
+
+section .card .image img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 40% 50% 40% 50%;
+    border: 3px solid #fff;
+}
+
+h2 {
+    font-weight: 600;
+    padding: 6px;
+    width: 100vw;
+    margin-left: 20px;
+}
+
+.details {
+    display: flex;
+    width: 47vw;
+    margin: 100px auto;
+    flex-wrap: wrap;
+    flex-direction: column;
+
+}
+
+.lists {
+    display: flex;
+    width: 47vw;
+    flex-wrap: wrap;
+    padding-left: 15px;
+}
+
+.list {
+    margin: 7px 10px;
+    width: fit-content;
+    height: 30px;
+    color: #fff;
+    font-weight: 600;
+    background-color: #f54837;
+    padding: 2px 20px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+
+}
+
+/* .card {
+    height: 400px;
+    width: 400px;
+    position: relative;
+    background: #fff;
+    border-radius: 20px;
+    margin: 20px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+} */

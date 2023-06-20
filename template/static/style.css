@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    color: #56423e;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+
+}
+
+body {
+    width: 100vw;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.wrapper .sidebar {
+    background: #f54837;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20vw;
+    max-width: 200px;
+    height: 100vh;
+    padding: 20px 0;
+    transition: all 0.5s ease;
+}
+
+section {
+    height: 100vh;
+    /* background-color: black; */
+    position: relative;
+    width: 80vw;
+    display: flex;
+    margin-left: 20vw;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    right: 0px;
+    /* grid-gap: 10px 0.1vw; */
+    /* grid-template-columns: repeat(4, 1fr); */
+}
+
+.card {
+    height: 320px;
+    width: 90%;
+    max-width: 400px;
+    position: relative;
+    background: #fff;
+    border-radius: 20px;
+    margin: 20px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+img:hover {
+    width: 400px;
+    height: 400px;
+    transition: all 0.3s ease;
+}
+
+/* 
+.card::before {
+    content: "";
+    position: absolute;
+    height: 50%;
+    width: 100%;
+    background: #f54837;
+    border-radius: 20px 20px 0 0;
+} */
+
+.card-content .link .name {
+    margin-top: 15px;
+    font-size: 17px;
+    font-weight: 600;
+    text-align: center;
+    /* background: #000; */
+}
+
+.card .card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    position: relative;
+    z-index: 100;
+}
+
+section .card .image {
+    height: 250px;
+    width: 250px;
+    border-radius: 40% 50% 40% 50%;
+    padding: 3px;
+    background: #f54837;
+}
+
+section .card .image img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 40% 50% 40% 50%;
+    border: 3px solid #fff;
+}
+
+/* 
+section .card .image img:hover {
+    height: 150%;
+    width: 150%;
+    object-fit: cover;
+    border-radius: 40% 50% 40% 50%;
+    border: 3px solid #fff;
+} */
+
+/* 
+@media screen and (max-width: 1500px) {
+    section {
+        height: 100vh;
+        width: 100%;
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media screen and (max-width: 1142px) {
+    section {
+        height: 100vh;
+        width: 100%;
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media screen and (max-width: 850px) {
+    section {
+        height: 100vh;
+        width: 100%;
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (max-width: 550px) {
+    section {
+        height: 100vh;
+        width: 100%;
+        grid-template-columns: repeat(1, 1fr);
+    }
+} */
