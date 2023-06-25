@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/viewArtists.css">
+    <title>{{.Artists.Name}} - Groupie Tracker</title>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">Groupie Tracker</div>
+            <ul class="nav-links">
+                <div class="menu">
+
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/">About</a></li>
+                </div>
+            </ul>
+        </nav>
+    </header>
+    <section>
+        <div class="parent">
+            <div class="container">
+
+                <div class="content">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="image">
+                                <img src="{{.Artists.Image}}" alt="Image">
+                            </div>
+                            <!-- <div class="name">{{.Artists.Name}}</div> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="details">
+
+                    <div class="members">
+                        <!-- <h2>Members</h2>
+                        <div class="lists">
+                            {{range .Artists.Members}}
+                            <div class="member list">{{.}}</div>
+                            {{end}}
+                        </div> -->
+                    </div>
+                    <div class="creationdate">
+                        <div class="lists">
+                            <h2>Name: </h2>
+                            <div class="creationdate list">{{.Artists.Name}}</div>
+                        </div>
+                    </div>
+                    <div class="creationdate">
+                        <div class="lists">
+                            <h2>Creation Date: </h2>
+                            <div class="creationdate list">{{.Artists.CreationDate}}</div>
+                        </div>
+                    </div>
+                    <div class="firstalbum">
+                        <div class="lists">
+                            <h2>First Album: </h2>
+                            <div class="firstalbum list">{{.Artists.FirstAlbum}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h2>Informations</h2>
+            <div class="concertdate">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Members</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{range .Artists.Members}}
+                        <tr>
+                            <td>{{.}}</td>
+                        </tr>
+                        {{end}}
+                    </tbody>
+                </table>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Locations</th>
+                            <th>Dates</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{range $index, $location := .Locations.Location}}
+                        <tr>
+                            <td>{{$location}}</td>
+                            <td>{{index $.Dates $index}}</td>
+                        </tr>
+                        {{end}}
+                        <!-- <td style="background-color: aqua; width: fit-content;">
+                                                        {{range $index, $locations := .Relations.DatesLocations}}
+                                                        {{$index}}
+                                                        {{range $location := $locations}}
+                                                        {{$location}}
+                                                        {{end}}
+                                                        {{end}}
+                                                    </td> -->
+
+                    </tbody>
+                </table>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Relations</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{range $index, $locationdates := .Relations}}
+                        <tr>
+                            <td>{{$index}}</td>
+                            <td>{{range $index := $locationdates}}
+                                <li> {{$index}}</li>
+                                {{end}}
+                            </td>
+                        </tr>
+                        {{end}}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        </div>
+    </section>
+</body>
+
+</html>

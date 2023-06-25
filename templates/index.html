@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/css.gg@2.0.0/icons/css/home.css' rel='stylesheet'>
+    <link href='https://unpkg.com/css.gg@2.0.0/icons/css/music.css' rel='stylesheet'>
+    <link rel="stylesheet" href="/static/style.css">
+    <title>Groupie Tracker</title>
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar">
+            <div class="logo" style="display: flex; justify-content: center; align-items: center;">Groupie Tracker<i
+                    class="gg-music" style="color: #fff; margin-left: 5px;"></i></div>
+            <ul class="nav-links">
+                <div class="menu">
+
+                    <li><a href="/" style="display: flex; justify-content: center; align-items: center;"><i
+                                class="gg-home" style="color: #fff; margin-right: 3px;"></i>Home</a></li>
+                    <li><a href="/" style="display: flex; flex-direction: row;""><div class=" abouticon"
+                            alt="">About</a></li>
+                </div>
+            </ul>
+        </nav>
+    </header>
+    <!-- <aside class="wrapper">
+        <div class="sidebar">
+            
+        </div>
+
+    </aside> -->
+    <section>
+        {{range .Artists}}
+        <div class="container">
+            <div class="content">
+                <div class="card">
+                    <div class="card-content">
+                        <a href="/artists/{{.ID}}" class="link">
+                            <div class="image">
+                                <img src="{{.Image}}" alt="Image">
+                            </div>
+                            <div class="name">{{.Name}}</div>
+                            <div class="details"">
+                                <div class=" creationdate">
+                                Creation Date {{.CreationDate}}
+                            </div>
+                            <div class="firstalbum">
+                                First Album {{.FirstAlbum}}
+                            </div>
+                    </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        </div>
+        {{end}}
+    </section>
+</body>
+
+</html>
