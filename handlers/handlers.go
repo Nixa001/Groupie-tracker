@@ -14,7 +14,17 @@ func HandleHome(w http.ResponseWriter, r *http.Request) {
 	FetchApi(w, r)
 	tmpl := template.Must(template.ParseFiles("templates/index.html"))
 	utils.GetJsons()
-	if r.URL.Path != "/" && r.URL.Path != "/artists" {
+	if r.URL.Path != "/" {
+		Handle404Error(w, r)
+		return
+	}
+	tmpl.Execute(w, nil)
+}
+func HandleArtists(w http.ResponseWriter, r *http.Request) {
+	FetchApi(w, r)
+	tmpl := template.Must(template.ParseFiles("templates/artists.html"))
+	utils.GetJsons()
+	if r.URL.Path != "/artists" {
 		Handle404Error(w, r)
 		return
 	}
