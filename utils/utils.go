@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"groupie-tracker/models"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"os"
 	"strings"
@@ -20,10 +21,10 @@ var DataExec = map[string]interface{}{}
 var Urls = map[string]string{}
 
 func GetJson(url string) []byte {
-	response, _ := http.Get(url)
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
+	response, err := http.Get(url)
+	if err != nil {
+		log.Fatal(err)
+	}
 	responseData, _ := ioutil.ReadAll(response.Body)
 	return responseData
 }

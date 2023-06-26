@@ -24,10 +24,10 @@ func HandleHome(w http.ResponseWriter, r *http.Request) {
 
 func ViewArtist(w http.ResponseWriter, r *http.Request) {
 	tabUrl := strings.Split(r.URL.String(), "/")
-	id, _ := strconv.Atoi(tabUrl[len(tabUrl)-1])
-	// if err != nil {
-	// 	Handle500Error(w, r)
-	// }
+	id, err := strconv.Atoi(tabUrl[len(tabUrl)-1])
+	if err != nil {
+		Handle500Error(w, r)
+	}
 	if id < 1 || id > 52 {
 		Handle400Error(w, r)
 		return
@@ -35,6 +35,8 @@ func ViewArtist(w http.ResponseWriter, r *http.Request) {
 	if id > 0 {
 		id = id - 1
 	}
+	FetchApi(w, r)
+	utils.GetJsons()
 	responseData := utils.GetJson(utils.Artists[id].ConcertDatesUrl)
 	json.Unmarshal(responseData, &utils.Dates)
 	responseData = utils.GetJson(utils.Artists[id].RelationsUrl)
@@ -43,7 +45,7 @@ func ViewArtist(w http.ResponseWriter, r *http.Request) {
 
 	json.Unmarshal(responseData, &utils.Locations)
 	tmpl := template.Must(template.ParseFiles("templates/viewArtist.html"))
-	utils.Artists[id].FirstAlbum=utils.FormatDate(utils.Artists[id].FirstAlbum)
+	utils.Artists[id].FirstAlbum = utils.FormatDate(utils.Artists[id].FirstAlbum)
 	for i, str := range utils.Dates.Date {
 		utils.Dates.Date[i] = utils.FormatDate(str)
 	}
