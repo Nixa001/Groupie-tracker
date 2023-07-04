@@ -33,6 +33,7 @@ func HandleArtists(w http.ResponseWriter, r *http.Request) {
 }
 
 func ViewArtist(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("templates/viewArtist.html"))
 	tabUrl := strings.Split(r.URL.String(), "/")
 	id, err := strconv.Atoi(tabUrl[len(tabUrl)-1])
 	if err != nil {
@@ -52,9 +53,8 @@ func ViewArtist(w http.ResponseWriter, r *http.Request) {
 	responseData = utils.GetJson(utils.Artists[id].RelationsUrl)
 	json.Unmarshal(responseData, &utils.Relations)
 	responseData = utils.GetJson(utils.Artists[id].LocationUrl)
-
 	json.Unmarshal(responseData, &utils.Locations)
-	tmpl := template.Must(template.ParseFiles("templates/viewArtist.html"))
+
 	utils.Artists[id].FirstAlbum = utils.FormatDate(utils.Artists[id].FirstAlbum)
 	for i, str := range utils.Dates.Date {
 		utils.Dates.Date[i] = utils.FormatDate(str)
@@ -62,15 +62,15 @@ func ViewArtist(w http.ResponseWriter, r *http.Request) {
 	for i, str := range utils.Locations.Location {
 		utils.Locations.Location[i] = utils.FormatStr(str)
 	}
-	// var count int
-	// for location, val := range utils.Relations.DatesLocations {
-	// 	for i := count; i < len(val); i++ {
-	// 		utils.Relations.DatesLocations[location] = []string{utils.FormatDate(utils.Relations.DatesLocations[location][i])}
-	// 		fmt.Println(utils.Relations.DatesLocations[location])
-	// 		break
-	// 	}
-	// 	count++
-	// }
+	for location, val := range utils.Relations.DatesLocations {
+		for _, dates := range val {
+			if !ContainAlpha(dates) {
+				utils.Relations.DatesLocations[location] = []string{utils.FormatDate(dates)}
+			}
+		}
+		location = utils.FormatStr(location)
+		//fmt.Println(utils.Relations.DatesLocations[location])
+	}
 	// fmt.Println(utils.Dates.Date)
 	tmpl.Execute(w, map[interface{}]interface{}{
 		"Artists":   utils.Artists[id],
@@ -116,4 +116,14 @@ func Handle500Error(w http.ResponseWriter, r *http.Request) {
 func ErrorPages(w http.ResponseWriter, r *http.Request, data map[string]interface{}) {
 	tmpl := template.Must(template.ParseFiles("templates/error.html"))
 	tmpl.Execute(w, data)
+}
+
+func ContainAlpha(s string) bool {
+	tabS := []rune(s)
+	for i := 0; i <= len(s)-1; i++ {
+		if tabS[i] >= 'a' && tabS[i] <= 'z' || tabS[i] >= 'A' && tabS[i] <= 'Z' {
+			return true
+		}
+	}
+	return false
 }

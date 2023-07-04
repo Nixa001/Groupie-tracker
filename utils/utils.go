@@ -20,6 +20,7 @@ var Relations models.Relation
 var DataExec = map[string]interface{}{}
 var Urls = map[string]string{}
 
+
 func GetJson(url string) []byte {
 	response, err := http.Get(url)
 	if err != nil {
@@ -41,13 +42,14 @@ func ErrorPages(w http.ResponseWriter, r *http.Request, data map[string]interfac
 }
 
 func FormatDate(dateStr string) string {
-	dateStr = strings.ReplaceAll(dateStr, "*", "")
+	dateStr = strings.TrimPrefix(dateStr, "*")
 	date, err := time.Parse("02-01-2006", dateStr)
 	if err != nil {
 		fmt.Println("Error parsing date:", err)
 		os.Exit(1)
 	}
 	formatedDate := date.Format("Jan 2, 2006")
+
 	return formatedDate
 }
 func FormatStr(str string) string {
