@@ -37,10 +37,6 @@ func ViewArtist(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("templates/viewArtist.html"))
 	tabUrl := strings.Split(r.URL.String(), "/")
 	id, err := strconv.Atoi(tabUrl[len(tabUrl)-1])
-	if r.URL.Path != "/artists/" {
-		Handle404Error(w, r)
-		return
-	}
 
 	if id < 1 || id > 52 || err != nil {
 		Handle400Error(w, r)
