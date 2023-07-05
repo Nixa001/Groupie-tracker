@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"groupie-tracker/models"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"os"
 	"strings"
@@ -20,23 +19,30 @@ var Relations models.Relation
 var DataExec = map[string]interface{}{}
 var Urls = map[string]string{}
 
-
-func GetJson(url string) []byte {
+func GetJson(w http.ResponseWriter, url string) []byte {
 	response, err := http.Get(url)
+	var responseData []byte
 	if err != nil {
-		log.Fatal(err)
+		DataExec := map[string]interface{}{
+			"ErrNum":  http.StatusInternalServerError,
+			"TextErr": "Internal Server Error"}
+		ErrorPages(w, DataExec)
+		return responseData 
+
+	} else {
+
+		responseData, _ = ioutil.ReadAll(response.Body)
+		return responseData
 	}
-	responseData, _ := ioutil.ReadAll(response.Body)
-	return responseData
 }
-func GetJsons() {
-	json.Unmarshal(GetJson(Urls["artists"]), &Artists)
-	json.Unmarshal(GetJson(Urls["locations"]), &Locations)
-	json.Unmarshal(GetJson(Urls["relation"]), &Relations)
-	json.Unmarshal(GetJson(Urls["dates"]), &Dates)
+func GetJsons(w http.ResponseWriter) {
+	json.Unmarshal(GetJson(w, Urls["artists"]), &Artists)
+	json.Unmarshal(GetJson(w, Urls["locations"]), &Locations)
+	json.Unmarshal(GetJson(w, Urls["relation"]), &Relations)
+	json.Unmarshal(GetJson(w, Urls["dates"]), &Dates)
 }
 
-func ErrorPages(w http.ResponseWriter, r *http.Request, data map[string]interface{}) {
+func ErrorPages(w http.ResponseWriter, data map[string]interface{}) {
 	tmpl := template.Must(template.ParseFiles("templates/error.html"))
 	tmpl.Execute(w, data)
 }

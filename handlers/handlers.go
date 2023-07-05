@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"groupie-tracker/models"
 	"groupie-tracker/utils"
 	"io/ioutil"
 	"net/http"
@@ -13,7 +14,7 @@ import (
 func HandleHome(w http.ResponseWriter, r *http.Request) {
 	FetchApi(w, r)
 	tmpl := template.Must(template.ParseFiles("templates/index.html"))
-	utils.GetJsons()
+	utils.GetJsons(w)
 	if r.URL.Path != "/" {
 		Handle404Error(w, r)
 		return
@@ -23,7 +24,7 @@ func HandleHome(w http.ResponseWriter, r *http.Request) {
 func HandleArtists(w http.ResponseWriter, r *http.Request) {
 	FetchApi(w, r)
 	tmpl := template.Must(template.ParseFiles("templates/artists.html"))
-	utils.GetJsons()
+	utils.GetJsons(w)
 	if r.URL.Path != "/artists" {
 		Handle404Error(w, r)
 		return
@@ -47,36 +48,38 @@ func ViewArtist(w http.ResponseWriter, r *http.Request) {
 		id = id - 1
 	}
 	FetchApi(w, r)
-	utils.GetJsons()
-	responseData := utils.GetJson(utils.Artists[id].ConcertDatesUrl)
-	json.Unmarshal(responseData, &utils.Dates)
-	responseData = utils.GetJson(utils.Artists[id].RelationsUrl)
-	json.Unmarshal(responseData, &utils.Relations)
-	responseData = utils.GetJson(utils.Artists[id].LocationUrl)
-	json.Unmarshal(responseData, &utils.Locations)
+	utils.GetJsons(w)
+	var Dates models.Date
+	var Relations models.Relation
+	var Locations models.Location
+
+	responseData := utils.GetJson(w, utils.Artists[id].ConcertDatesUrl)
+	json.Unmarshal(responseData, &Dates)
+	responseData = utils.GetJson(w, utils.Artists[id].RelationsUrl)
+	json.Unmarshal(responseData, &Relations)
+	responseData = utils.GetJson(w, utils.Artists[id].LocationUrl)
+	json.Unmarshal(responseData, &Locations)
 
 	utils.Artists[id].FirstAlbum = utils.FormatDate(utils.Artists[id].FirstAlbum)
-	for i, str := range utils.Dates.Date {
-		utils.Dates.Date[i] = utils.FormatDate(str)
+	for i, str := range Dates.Date {
+		Dates.Date[i] = utils.FormatDate(str)
 	}
-	for i, str := range utils.Locations.Location {
-		utils.Locations.Location[i] = utils.FormatStr(str)
+	for i, str := range Locations.Location {
+		Locations.Location[i] = utils.FormatStr(str)
 	}
-	for location, val := range utils.Relations.DatesLocations {
+	for location, val := range Relations.DatesLocations {
 		for _, dates := range val {
 			if !ContainAlpha(dates) {
-				utils.Relations.DatesLocations[location] = []string{utils.FormatDate(dates)}
+				Relations.DatesLocations[location] = []string{utils.FormatDate(dates)}
 			}
 		}
 		location = utils.FormatStr(location)
-		//fmt.Println(utils.Relations.DatesLocations[location])
 	}
-	// fmt.Println(utils.Dates.Date)
 	tmpl.Execute(w, map[interface{}]interface{}{
 		"Artists":   utils.Artists[id],
-		"Dates":     utils.Dates.Date,
-		"Relations": utils.Relations.DatesLocations,
-		"Locations": utils.Locations})
+		"Dates":     Dates.Date,
+		"Relations": Relations.DatesLocations,
+		"Locations": Locations})
 }
 
 func FetchApi(w http.ResponseWriter, r *http.Request) {
@@ -94,7 +97,7 @@ func Handle404Error(w http.ResponseWriter, r *http.Request) {
 	utils.DataExec = map[string]interface{}{
 		"ErrNum":  http.StatusNotFound,
 		"TextErr": "Page Not Fount"}
-	ErrorPages(w, r, utils.DataExec)
+	ErrorPages(w, utils.DataExec)
 }
 
 func Handle400Error(w http.ResponseWriter, r *http.Request) {
@@ -102,7 +105,7 @@ func Handle400Error(w http.ResponseWriter, r *http.Request) {
 	utils.DataExec = map[string]interface{}{
 		"ErrNum":  http.StatusBadRequest,
 		"TextErr": "Bad Request"}
-	ErrorPages(w, r, utils.DataExec)
+	ErrorPages(w, utils.DataExec)
 }
 
 func Handle500Error(w http.ResponseWriter, r *http.Request) {
@@ -110,18 +113,17 @@ func Handle500Error(w http.ResponseWriter, r *http.Request) {
 	utils.DataExec = map[string]interface{}{
 		"ErrNum":  http.StatusInternalServerError,
 		"TextErr": "Internal Server Error"}
-	ErrorPages(w, r, utils.DataExec)
+	ErrorPages(w, utils.DataExec)
 }
 
-func ErrorPages(w http.ResponseWriter, r *http.Request, data map[string]interface{}) {
+func ErrorPages(w http.ResponseWriter, data map[string]interface{}) {
 	tmpl := template.Must(template.ParseFiles("templates/error.html"))
 	tmpl.Execute(w, data)
 }
 
-func ContainAlpha(s string) bool {
-	tabS := []rune(s)
-	for i := 0; i <= len(s)-1; i++ {
-		if tabS[i] >= 'a' && tabS[i] <= 'z' || tabS[i] >= 'A' && tabS[i] <= 'Z' {
+func ContainAlpha(str string) bool {
+	for _, runeValue := range str {
+		if runeValue >= 'a' && runeValue <= 'z' {
 			return true
 		}
 	}

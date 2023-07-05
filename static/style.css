@@ -30,19 +30,35 @@ li {
 }
 
 .navbar {
-    width: 80%;
+    width: 100vw;
     display: flex;
     height: 70px;
-    align-items: center;
+    /* align-items: center; */
     justify-content: space-between;
     padding: 20px;
     background-color: var(--firstcolor);
     color: #fff;
 }
 
+.navbar .logo {
+    margin-left: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.menu{
+    margin-right: 10px;
+}
+
 .nav-links a {
     color: #fff;
     font-weight: 600;
+}
+
+.nav-links li:hover {
+    color: #FE9000;
+    font-weight: 600;
+    background: #fff;
 }
 
 .logo {
@@ -82,7 +98,6 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
     /* background-image: url(1.jpg); */
     /* background-size: cover; */
 
