@@ -37,10 +37,12 @@ func ViewArtist(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("templates/viewArtist.html"))
 	tabUrl := strings.Split(r.URL.String(), "/")
 	id, err := strconv.Atoi(tabUrl[len(tabUrl)-1])
-	if err != nil {
-		Handle500Error(w, r)
+	if r.URL.Path != "/artists/" {
+		Handle404Error(w, r)
+		return
 	}
-	if id < 1 || id > 52 {
+
+	if id < 1 || id > 52 || err != nil {
 		Handle400Error(w, r)
 		return
 	}
@@ -69,9 +71,7 @@ func ViewArtist(w http.ResponseWriter, r *http.Request) {
 	}
 	for location, val := range Relations.DatesLocations {
 		for _, dates := range val {
-			if !ContainAlpha(dates) {
-				Relations.DatesLocations[location] = []string{utils.FormatDate(dates)}
-			}
+			Relations.DatesLocations[location] = []string{utils.FormatDate(dates)}
 		}
 		location = utils.FormatStr(location)
 	}
@@ -96,7 +96,7 @@ func Handle404Error(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNotFound)
 	utils.DataExec = map[string]interface{}{
 		"ErrNum":  http.StatusNotFound,
-		"TextErr": "Page Not Fount"}
+		"TextErr": "Page Not Found"}
 	ErrorPages(w, utils.DataExec)
 }
 
