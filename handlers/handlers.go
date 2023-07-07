@@ -68,7 +68,6 @@ func ViewArtist(w http.ResponseWriter, r *http.Request) {
 		for _, dates := range val {
 			Relations.DatesLocations[location] = []string{utils.FormatDate(dates)}
 		}
-		location = utils.FormatStr(location)
 	}
 	tmpl.Execute(w, map[interface{}]interface{}{
 		"Artists":   utils.Artists[id],
@@ -114,13 +113,4 @@ func Handle500Error(w http.ResponseWriter, r *http.Request) {
 func ErrorPages(w http.ResponseWriter, data map[string]interface{}) {
 	tmpl := template.Must(template.ParseFiles("templates/error.html"))
 	tmpl.Execute(w, data)
-}
-
-func ContainAlpha(str string) bool {
-	for _, runeValue := range str {
-		if runeValue >= 'a' && runeValue <= 'z' {
-			return true
-		}
-	}
-	return false
 }

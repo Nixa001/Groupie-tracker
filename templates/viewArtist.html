@@ -4,23 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../static/icon.png" type="image/x-icon">
     <link rel="stylesheet" href="/static/viewArtists.css">
     <title>{{.Artists.Name}} - Groupie Tracker</title>
 </head>
 
 <body>
     <header>
-        {{define "NavBar"}}
         <nav class="navbar">
-            <div class="logo">Groupie Tracker</div>
+            <div class="logo" style="display: flex; justify-content: center; align-items: center;"><a href="/"><img
+                        class="logo" src="../static/images/logomusi.png" alt="" srcset=""></a></div>
             <ul class="nav-links">
                 <div class="menu">
+
                     <li><a href="/">Home</a></li>
                     <li><a href="/">About</a></li>
                 </div>
             </ul>
         </nav>
-        {{end}}
     </header>
     <section>
         <div class="parent">

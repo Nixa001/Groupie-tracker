@@ -11,8 +11,12 @@
     color: #56423e;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
-
 }
+
+body {
+    overflow: hidden;
+}
+
 
 header {
     width: 100vw;
@@ -31,11 +35,12 @@ li {
 }
 
 .navbar {
-    width: 80%;
+    width: 100%;
     display: flex;
     height: 70px;
     align-items: center;
     justify-content: space-between;
+    overflow: hidden;
     padding: 20px;
     background-color: var(--firstcolor);
     color: #fff;
@@ -55,7 +60,8 @@ li {
 }
 
 .logo {
-    font-size: 32px;
+    margin-top: 6px;
+    width: 120px;
     color: #fff;
 }
 
@@ -83,8 +89,8 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-image: url(2.jpg);
-    background-size: cover;
+    /* background-image: url(2.jpg);
+    background-size: cover; */
 }
 
 .btn-home {
@@ -97,8 +103,49 @@ body {
     border-radius: 4px;
     cursor: pointer;
 }
-.link{
-    height: 90vh;
+
+.btn-home:hover {
+    background-image: linear-gradient(135deg, var(--firstcolor) 10%, var(--secondcolor) 100%);
+}
+
+.link {
     display: flex;
     align-items: center;
+}
+
+.content {
+    width: 90vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.image {
+    float: right;
+}
+
+.text-h1 {
+    width: 100%;
+}
+
+.text-h2 {
+    width: 100%;
+}
+
+span {
+    color: var(--firstcolor);
+}
+
+.text {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    float: left;
+}
+
+h1 {
+    font-size: 70px;
 }
