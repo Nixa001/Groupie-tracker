@@ -50,7 +50,6 @@ func ViewArtist(w http.ResponseWriter, r *http.Request) {
 	var Dates models.Date
 	var Relations models.Relation
 	var Locations models.Location
-
 	responseData := utils.GetJson(w, utils.Artists[id].ConcertDatesUrl)
 	json.Unmarshal(responseData, &Dates)
 	responseData = utils.GetJson(w, utils.Artists[id].RelationsUrl)
