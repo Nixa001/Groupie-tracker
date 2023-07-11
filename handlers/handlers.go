@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"groupie-tracker/models"
 	"groupie-tracker/utils"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"strconv"
 	"strings"
@@ -12,11 +12,16 @@ import (
 )
 
 func HandleHome(w http.ResponseWriter, r *http.Request) {
-	FetchApi(w, r)
 	tmpl := template.Must(template.ParseFiles("templates/index.html"))
+
+	FetchApi(w, r)
 	utils.GetJsons(w)
 	if r.URL.Path != "/" {
-		Handle404Error(w, r)
+		Handle404Error(w)
+		return
+	}
+	if r.Method != "GET" {
+		Handle405Error(w)
 		return
 	}
 	tmpl.Execute(w, nil)
@@ -26,7 +31,11 @@ func HandleArtists(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("templates/artists.html"))
 	utils.GetJsons(w)
 	if r.URL.Path != "/artists" {
-		Handle404Error(w, r)
+		Handle404Error(w)
+		return
+	}
+	if r.Method != "GET" {
+		Handle405Error(w)
 		return
 	}
 	utils.DataExec = map[string]interface{}{"Artists": utils.Artists}
@@ -39,7 +48,7 @@ func ViewArtist(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(tabUrl[len(tabUrl)-1])
 
 	if id < 1 || id > 52 || err != nil {
-		Handle400Error(w, r)
+		Handle400Error(w)
 		return
 	}
 	if id > 0 {
@@ -79,14 +88,14 @@ func ViewArtist(w http.ResponseWriter, r *http.Request) {
 func FetchApi(w http.ResponseWriter, r *http.Request) {
 	data, err := http.Get("https://groupietrackers.herokuapp.com/api")
 	if err != nil {
-		Handle500Error(w, r)
+		Handle500Error(w)
 		return
 	}
-	responsedata, _ := ioutil.ReadAll(data.Body)
+	responsedata, _ := io.ReadAll(data.Body)
 	json.Unmarshal(responsedata, &utils.Urls)
 }
 
-func Handle404Error(w http.ResponseWriter, r *http.Request) {
+func Handle404Error(w http.ResponseWriter) {
 	w.WriteHeader(http.StatusNotFound)
 	utils.DataExec = map[string]interface{}{
 		"ErrNum":  http.StatusNotFound,
@@ -94,7 +103,15 @@ func Handle404Error(w http.ResponseWriter, r *http.Request) {
 	ErrorPages(w, utils.DataExec)
 }
 
-func Handle400Error(w http.ResponseWriter, r *http.Request) {
+func Handle405Error(w http.ResponseWriter) {
+	w.WriteHeader(http.StatusMethodNotAllowed)
+	utils.DataExec = map[string]interface{}{
+		"ErrNum":  http.StatusMethodNotAllowed,
+		"TextErr": "Method Not Allowed"}
+	ErrorPages(w, utils.DataExec)
+}
+
+func Handle400Error(w http.ResponseWriter) {
 	w.WriteHeader(http.StatusBadRequest)
 	utils.DataExec = map[string]interface{}{
 		"ErrNum":  http.StatusBadRequest,
@@ -102,7 +119,7 @@ func Handle400Error(w http.ResponseWriter, r *http.Request) {
 	ErrorPages(w, utils.DataExec)
 }
 
-func Handle500Error(w http.ResponseWriter, r *http.Request) {
+func Handle500Error(w http.ResponseWriter) {
 	w.WriteHeader(http.StatusInternalServerError)
 	utils.DataExec = map[string]interface{}{
 		"ErrNum":  http.StatusInternalServerError,
@@ -113,4 +130,13 @@ func Handle500Error(w http.ResponseWriter, r *http.Request) {
 func ErrorPages(w http.ResponseWriter, data map[string]interface{}) {
 	tmpl := template.Must(template.ParseFiles("templates/error.html"))
 	tmpl.Execute(w, data)
+}
+
+func ContainAlpha(str string) bool {
+	for _, runeValue := range str {
+		if runeValue >= 'a' && runeValue <= 'z' {
+			return true
+		}
+	}
+	return false
 }

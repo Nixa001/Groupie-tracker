@@ -59,6 +59,13 @@ li {
     font-weight: 600;
 }
 
+.search {
+
+    padding: 10px;
+    border: 1px solid #fff;
+    border-radius: 10px;
+}
+
 .logo {
     margin-top: 6px;
     width: 120px;
@@ -93,15 +100,23 @@ body {
     background-size: cover; */
 }
 
+.btn-h2 {
+    width: 80%;
+    display: flex;
+    align-items: center;
+}
+
 .btn-home {
     background-image: linear-gradient(135deg, var(--secondcolor) 10%, var(--firstcolor) 100%);
     font-weight: bold;
-    margin-top: 10px;
+    font-size: 20px;
     color: white;
     padding: 12px 20px;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
+    margin-left: 16px;
+
 }
 
 .btn-home:hover {
@@ -133,6 +148,30 @@ body {
     width: 100%;
 }
 
+h2 span {
+    background-color: var(--firstcolor);
+    color: #fff;
+    border-radius: 6px;
+    padding: 4px;
+    animation: btn-animate 2s ease infinite;
+}
+
+h2 span:hover {
+    background-color: var(--firstcolor);
+    color: #fff;
+    border-radius: 6px;
+    padding: 4px;
+    animation: btn-animate .3s ease;
+}
+
+@keyframes btn-animate {
+
+    50% {
+        font-size: 20px;
+    }
+
+}
+
 span {
     color: var(--firstcolor);
 }
@@ -148,4 +187,26 @@ span {
 
 h1 {
     font-size: 70px;
+}
+
+@media screen and (max-width:810px) {
+    .images {
+        display: none;
+        position: absolute;
+        opacity: 0.5;
+        z-index: -1;
+    }
+
+    .content {
+        flex-direction: column;
+        justify-content: space-around;
+    }
+
+    .text {
+        width: 90%;
+    }
+
+    h1 {
+        font-size: 55px;
+    }
 }

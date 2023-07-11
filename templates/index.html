@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <link href='https://unpkg.com/css.gg@2.0.0/icons/css/home.css' rel='stylesheet'>
     <link href='https://unpkg.com/css.gg@2.0.0/icons/css/music.css' rel='stylesheet'> -->
+
     <link rel="stylesheet" href="/static/main.css">
     <link rel="shortcut icon" href="../static/images/icon.png" type="image/x-icon">
     <title>Groupie Tracker</title>
@@ -15,9 +16,11 @@
 
     <header>
         <nav class="navbar">
-            <div class="logo" style="display: flex; justify-content: center; align-items: center;"><a href="/"><img class="logo" src="../static/images/logomusi.png" alt="" srcset=""></a></div>
+            <div class="logo" style="display: flex; justify-content: center; align-items: center;"><a href="/"><img
+                        class="logo" src="../static/images/logomusi.png" alt="" srcset=""></a></div>
             <ul class="nav-links">
                 <div class="menu">
+                    <input type="text" class="search" placeholder="Search..">
                     <li><a href="/">Home</a></li>
                     <li><a href="/">About</a></li>
                 </div>
@@ -26,18 +29,20 @@
     </header>
 
     <div class="content">
-        <div class="images"> <img class="image" src="../static/images/music.svg" alt="" srcset=""></div>
         <div class="text">
             <div class="text-h1">
                 <h1>Find <span>the rhythm</span> you love</h1>
             </div>
             <div class="text-h2">
-                <h2>Discover more artists</h2>
-                <a href="/artists" class="link">
-                    <button type="submit" class="btn-home" name="artistbtn">Artists</button>
-                </a>
+                <div class="btn-h2">
+                    <h2>Discover more artists <a href="/artists"> <span>Here</span></a></h2>
+                    <!-- <a href="/artists" class="link">
+                        <button type="submit" class="btn-home" name="artistbtn">Artists</button>
+                    </a> -->
+                </div>
             </div>
         </div>
+        <div class="images"> <img class="image" src="../static/images/music.svg" alt="" srcset=""></div>
     </div>
 </body>
 

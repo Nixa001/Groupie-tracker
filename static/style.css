@@ -230,15 +230,20 @@ section .card .image:hover {
         grid-template-columns: repeat(3, 1fr);
     }
 }
-
+*/
 @media screen and (max-width: 850px) {
-    section {
-        height: 100vh;
-        width: 100%;
-        grid-template-columns: repeat(2, 1fr);
-    }
+    .card {
+            height: 200px;
+            width: 50%;
+        }
+    
+        .card:hover {
+            transition: all 0.5s ease;
+            height: 400px;
+            opacity: 1;
+        }
 }
-
+/*
 @media screen and (max-width: 550px) {
     section {
         height: 100vh;
