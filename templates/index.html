@@ -4,28 +4,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link href='https://unpkg.com/css.gg@2.0.0/icons/css/home.css' rel='stylesheet'>
-    <link href='https://unpkg.com/css.gg@2.0.0/icons/css/music.css' rel='stylesheet'> -->
-
+    <link href='https://unpkg.com/css.gg@2.0.0/icons/css/home.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/static/main.css">
     <link rel="shortcut icon" href="../static/images/icon.png" type="image/x-icon">
     <title>Groupie Tracker</title>
 </head>
 
 <body>
-
     <header>
-        <nav class="navbar">
-            <div class="logo" style="display: flex; justify-content: center; align-items: center;"><a href="/"><img
-                        class="logo" src="../static/images/logomusi.png" alt="" srcset=""></a></div>
-            <ul class="nav-links">
-                <div class="menu">
-                    <input type="text" class="search" placeholder="Search..">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/">About</a></li>
+        <div class="container">
+            <nav class="navbar">
+                <a href="/" class="nav-logos"><img src="../static/images/logomusi.png" alt="logo" class="nav-logo"></a>
+
+                <ul class="nav-menu">
+                    <div class="searchdiv"><input type="text" class="search" placeholder="Search.."><i
+                            class="fa fa-search"></i></div>
+                    <li class="nav-item">
+                        <a href="/" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Contact</a>
+                    </li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
                 </div>
-            </ul>
-        </nav>
+            </nav>
+        </div>
     </header>
 
     <div class="content">
@@ -44,6 +55,24 @@
         </div>
         <div class="images"> <img class="image" src="../static/images/music.svg" alt="" srcset=""></div>
     </div>
+
+    <script>
+        // Fonction pour rendre la barre de navigation responsive
+        const icon = document.querySelector(".hamburger");
+        const navMenu = document.querySelector(".nav-menu");
+
+        icon.addEventListener("click", () => {
+            icon.classList.toggle("active");
+            navMenu.classList.toggle("active");
+        })
+
+        document.querySelectorAll(".nav-link").forEach(n => n.addEventListener("click", () => {
+            icon.classList.remove("active");
+            navMenu.classList.remove("active");
+        }))
+
+    </script>
+
 </body>
 
 </html>
