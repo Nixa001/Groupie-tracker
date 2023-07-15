@@ -1,3 +1,4 @@
+{{define "artists"}}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,18 +11,6 @@
 </head>
 
 <body>
-    <header>
-        <nav class="navbar">
-            <div class="logo"><a href="/"><img class="logo" src="../static/images/logomusi.png" alt="" srcset=""></a></div>
-            <ul class="nav-links">
-                <div class="menu">
-
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/">About</a></li>
-                </div>
-            </ul>
-        </nav>
-    </header>
 
     <section>
         {{range .Artists}}
@@ -52,3 +41,4 @@
 </body>
 
 </html>
+{{end}}

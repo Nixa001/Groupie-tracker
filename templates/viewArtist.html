@@ -1,3 +1,4 @@
+{{define "viewArtist"}}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,19 +11,6 @@
 </head>
 
 <body>
-    <header>
-        <nav class="navbar">
-            <div class="logo" style="display: flex; justify-content: center; align-items: center;"><a href="/"><img
-                        class="logo" src="../static/images/logomusi.png" alt="" srcset=""></a></div>
-            <ul class="nav-links">
-                <div class="menu">
-
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/">About</a></li>
-                </div>
-            </ul>
-        </nav>
-    </header>
     <section>
         <div class="parent">
             <div class="container">
@@ -33,19 +21,12 @@
                             <div class="image">
                                 <img src="{{.Artists.Image}}" alt="Image">
                             </div>
-                            <!-- <div class="name">{{.Artists.Name}}</div> -->
                         </div>
                     </div>
                 </div>
                 <div class="details">
 
                     <div class="members">
-                        <!-- <h2>Members</h2>
-                        <div class="lists">
-                            {{range .Artists.Members}}
-                            <div class="member list">{{.}}</div>
-                            {{end}}
-                        </div> -->
                     </div>
                     <div class="creationdate">
                         <div class="lists">
@@ -97,15 +78,6 @@
                             <td>{{index $.Dates $index}}</td>
                         </tr>
                         {{end}}
-                        <!-- <td style="background-color: aqua; width: fit-content;">
-                                                        {{range $index, $locations := .Relations.DatesLocations}}
-                                                        {{$index}}
-                                                        {{range $location := $locations}}
-                                                        {{$location}}
-                                                        {{end}}
-                                                        {{end}}
-                                                    </td> -->
-
                     </tbody>
                 </table>
                 <table>
@@ -136,3 +108,4 @@
 </body>
 
 </html>
+{{end}}

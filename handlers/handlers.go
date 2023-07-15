@@ -12,7 +12,7 @@ import (
 )
 
 func HandleHome(w http.ResponseWriter, r *http.Request) {
-	tmpl := template.Must(template.ParseFiles("templates/index.html"))
+	tmpl := template.Must(template.ParseGlob("templates/*.html"))
 
 	FetchApi(w, r)
 	utils.GetJsons(w)
@@ -24,11 +24,15 @@ func HandleHome(w http.ResponseWriter, r *http.Request) {
 		Handle405Error(w)
 		return
 	}
-	tmpl.Execute(w, nil)
+	utils.DataExec = map[string]interface{}{"Artists": utils.Artists}
+
+	tmpl.ExecuteTemplate(w, "header", utils.DataExec)
+	tmpl.ExecuteTemplate(w, "index", utils.DataExec)
+
 }
 func HandleArtists(w http.ResponseWriter, r *http.Request) {
 	FetchApi(w, r)
-	tmpl := template.Must(template.ParseFiles("templates/artists.html"))
+	tmpl := template.Must(template.ParseGlob("templates/*.html"))
 	utils.GetJsons(w)
 	if r.URL.Path != "/artists" {
 		Handle404Error(w)
@@ -38,13 +42,27 @@ func HandleArtists(w http.ResponseWriter, r *http.Request) {
 		Handle405Error(w)
 		return
 	}
-	utils.DataExec = map[string]interface{}{"Artists": utils.Artists}
-	tmpl.Execute(w, utils.DataExec)
+	// var Locations map[string][]models.Location
+
+	// responseData := utils.GetJson(w, "https://groupietrackers.herokuapp.com/api/locations")
+	// json.Unmarshal(responseData, &Locations)
+	utils.DataExec = map[string]interface{}{
+		"Artists": utils.Artists,
+		// "Locations": Locations
+	}
+	// fmt.Print(Locations)
+	tmpl.ExecuteTemplate(w, "header", utils.DataExec)
+	tmpl.ExecuteTemplate(w, "artists", utils.DataExec)
 }
 
 func ViewArtist(w http.ResponseWriter, r *http.Request) {
-	tmpl := template.Must(template.ParseFiles("templates/viewArtist.html"))
+	tmpl := template.Must(template.ParseGlob("templates/*.html"))
 	tabUrl := strings.Split(r.URL.String(), "/")
+	if len(tabUrl) > 3 {
+		Handle404Error(w)
+		return
+
+	}
 	id, err := strconv.Atoi(tabUrl[len(tabUrl)-1])
 
 	if id < 1 || id > 52 || err != nil {
@@ -53,6 +71,10 @@ func ViewArtist(w http.ResponseWriter, r *http.Request) {
 	}
 	if id > 0 {
 		id = id - 1
+	}
+	if r.Method != "GET" {
+		Handle405Error(w)
+		return
 	}
 	FetchApi(w, r)
 	utils.GetJsons(w)
@@ -78,11 +100,19 @@ func ViewArtist(w http.ResponseWriter, r *http.Request) {
 			Relations.DatesLocations[location] = []string{utils.FormatDate(dates)}
 		}
 	}
-	tmpl.Execute(w, map[interface{}]interface{}{
+	DataExec := map[interface{}]interface{}{
 		"Artists":   utils.Artists[id],
 		"Dates":     Dates.Date,
 		"Relations": Relations.DatesLocations,
-		"Locations": Locations})
+		"Locations": Locations}
+	DataExec1 := map[interface{}]interface{}{
+		"Artists":   utils.Artists,
+		"Dates":     Dates.Date,
+		"Relations": Relations.DatesLocations,
+		"Locations": Locations}
+	tmpl.ExecuteTemplate(w, "header", DataExec1)
+	tmpl.ExecuteTemplate(w, "viewArtist", DataExec)
+
 }
 
 func FetchApi(w http.ResponseWriter, r *http.Request) {
@@ -130,13 +160,4 @@ func Handle500Error(w http.ResponseWriter) {
 func ErrorPages(w http.ResponseWriter, data map[string]interface{}) {
 	tmpl := template.Must(template.ParseFiles("templates/error.html"))
 	tmpl.Execute(w, data)
-}
-
-func ContainAlpha(str string) bool {
-	for _, runeValue := range str {
-		if runeValue >= 'a' && runeValue <= 'z' {
-			return true
-		}
-	}
-	return false
 }

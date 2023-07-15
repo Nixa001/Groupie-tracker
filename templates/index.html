@@ -1,44 +1,16 @@
+{{define "index"}}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href='https://unpkg.com/css.gg@2.0.0/icons/css/home.css' rel='stylesheet'>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/static/main.css">
     <link rel="shortcut icon" href="../static/images/icon.png" type="image/x-icon">
     <title>Groupie Tracker</title>
 </head>
 
 <body>
-    <header>
-        <div class="container">
-            <nav class="navbar">
-                <a href="/" class="nav-logos"><img src="../static/images/logomusi.png" alt="logo" class="nav-logo"></a>
-
-                <ul class="nav-menu">
-                    <div class="searchdiv"><input type="text" class="search" placeholder="Search.."><i
-                            class="fa fa-search"></i></div>
-                    <li class="nav-item">
-                        <a href="/" class="nav-link">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">Contact</a>
-                    </li>
-                </ul>
-                <div class="hamburger">
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                </div>
-            </nav>
-        </div>
-    </header>
-
     <div class="content">
         <div class="text">
             <div class="text-h1">
@@ -47,32 +19,15 @@
             <div class="text-h2">
                 <div class="btn-h2">
                     <h2>Discover more artists <a href="/artists"> <span>Here</span></a></h2>
-                    <!-- <a href="/artists" class="link">
-                        <button type="submit" class="btn-home" name="artistbtn">Artists</button>
-                    </a> -->
+
                 </div>
             </div>
         </div>
         <div class="images"> <img class="image" src="../static/images/music.svg" alt="" srcset=""></div>
     </div>
 
-    <script>
-        // Fonction pour rendre la barre de navigation responsive
-        const icon = document.querySelector(".hamburger");
-        const navMenu = document.querySelector(".nav-menu");
-
-        icon.addEventListener("click", () => {
-            icon.classList.toggle("active");
-            navMenu.classList.toggle("active");
-        })
-
-        document.querySelectorAll(".nav-link").forEach(n => n.addEventListener("click", () => {
-            icon.classList.remove("active");
-            navMenu.classList.remove("active");
-        }))
-
-    </script>
 
 </body>
 
 </html>
+{{end}}
