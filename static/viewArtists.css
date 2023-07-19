@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 :root {
-    --firstcolor: #FE9000;
-    --secondcolor: #f7ac49;
-    --textcolor: #56423e;
+    --firstcolor: #080321;
+    --secondcolor: #080321bd;
+    --textcolor: #4e2202;
     --whitecolor: #fff;
 }
 
@@ -130,7 +130,7 @@ h2 {
     width: 80vw;
     height: 40vh;
     display: flex;
-    overflow: scroll;
+    /* overflow: scroll; */
     flex-wrap: wrap;
     justify-content: center;
 }
@@ -170,4 +170,11 @@ table tbody tr:nth-of-type(even) {
 
 table tbody tr:last-of-type {
     border-bottom: 2px solid var(--firstcolor);
+}
+
+@media screen and (max-width: 570px) {
+    table {
+        min-width: 300px;
+        overflow: hidden;
+    }
 }
