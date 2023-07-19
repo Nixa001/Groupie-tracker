@@ -14,15 +14,14 @@
             </div> -->
             <ul class="nav-menu">
                 <form action="" method="post">
-
-                    <div class="searchdiv"> <input list="browsers" class="search" id="browser">
+                    <div class="searchdiv"> <input placeholder="Search..." list="browsers" class="search" name="browsers">
                         <button><i class="fa fa-search"></i></button>
                     </div>
                     <datalist id="browsers">
                         {{range .Artists}}
-                        <option value="{{.Name}} - Artist">
+                        <option value="{{.Name}}">
                             {{range .Members}}
-                        <option value="{{.}} - Members">
+                        <option value="{{.}}">
                             {{end}}
                             {{end}}
                     </datalist>
@@ -51,9 +50,9 @@
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
     :root {
-        --firstcolor: #FE9000;
-        --secondcolor: #f7ac49;
-        --textcolor: #56423e;
+        --firstcolor: #080321;
+        --secondcolor: #080321bd;
+        --textcolor: #4e2202;
         --whitecolor: #fff;
     }
 
@@ -187,20 +186,19 @@
         padding: 5px 14px;
     }
 
-    .fa {
-        color: var(--whitecolor);
-        cursor: pointer;
-    }
-
     .fa-search {
+        cursor: pointer;
+        color: var(--whitecolor);
         padding: 13px;
+        border-radius: 6px;
     }
 
     .fa-search:hover {
-        background: var(--whitecolor);
-        color: var(--textcolor);
+        transform: all 2s ease;
         padding: 13px;
-        border-radius: 6px;
+        color: var(--firstcolor);
+        background: var(--whitecolor);
+
     }
 
     /*

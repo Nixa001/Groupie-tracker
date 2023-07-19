@@ -1,3 +1,4 @@
+{{define "error"}}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,19 +12,21 @@
 </head>
 <style>
     :root {
-        --firstcolor: #FE9000;
-        --secondcolor: #f7ac49;
+        --firstcolor: #080321;
+        --secondcolor: #080321bd;
+        --textcolor: #4e2202;
+        --whitecolor: #fff;
     }
 
     * {
-        transition: all 0.6s;
         margin: 0;
         padding: 0;
-        color: #56423e;
+        color: var(--textcolor);
     }
 
     .err {
-        height: 90vh;
+        top: 10vh;
+        height: 80vh;
         font-family: sans-serif;
         display: flex;
         flex-direction: column;
@@ -44,7 +47,6 @@
 
     a {
         text-decoration: none;
-        font-size: 20px;
         color: #fff;
     }
 
@@ -75,3 +77,4 @@
 </body>
 
 </html>
+{{end}}
