@@ -28,7 +28,7 @@ type Relation struct {
 	DatesLocations map[string][]string `json:"datesLocations"`
 }
 type Index struct {
-	Dates []Date `json:"index"`
+	Index []Location `json:"index"`
 }
 
 // type Locationss struct {
