@@ -20,16 +20,18 @@ func HandleHome(w http.ResponseWriter, r *http.Request) {
 		Handle404Error(w)
 		return
 	}
-	if r.Method != "GET" {
+	if r.Method != "GET" && r.Method != "POST" {
 		Handle405Error(w)
 		return
 	}
+
 	utils.DataExec = map[string]interface{}{"Artists": utils.Artists}
 
 	tmpl.ExecuteTemplate(w, "header", utils.DataExec)
 	tmpl.ExecuteTemplate(w, "index", utils.DataExec)
 
 }
+
 func HandleArtists(w http.ResponseWriter, r *http.Request) {
 	FetchApi(w, r)
 	tmpl := template.Must(template.ParseGlob("templates/*.html"))
@@ -38,21 +40,23 @@ func HandleArtists(w http.ResponseWriter, r *http.Request) {
 		Handle404Error(w)
 		return
 	}
-	if r.Method != "GET" {
+	if r.Method != "GET" && r.Method != "POST" {
 		Handle405Error(w)
 		return
 	}
-	// var Locations map[string][]models.Location
-
-	// responseData := utils.GetJson(w, "https://groupietrackers.herokuapp.com/api/locations")
-	// json.Unmarshal(responseData, &Locations)
 	utils.DataExec = map[string]interface{}{
 		"Artists": utils.Artists,
-		// "Locations": Locations
 	}
-	// fmt.Print(Locations)
-	tmpl.ExecuteTemplate(w, "header", utils.DataExec)
+	if r.Method == "POST" {
+
+		str := r.PostFormValue("browsers")
+		DataExec := Recherche(w, str)
+		tmpl.ExecuteTemplate(w, "header", utils.DataExec)
+		tmpl.ExecuteTemplate(w, "artists", map[string]interface{}{"Artists": DataExec})
+		return
+	}
 	tmpl.ExecuteTemplate(w, "artists", utils.DataExec)
+	tmpl.ExecuteTemplate(w, "header", utils.DataExec)
 }
 
 func ViewArtist(w http.ResponseWriter, r *http.Request) {
@@ -63,6 +67,7 @@ func ViewArtist(w http.ResponseWriter, r *http.Request) {
 		return
 
 	}
+
 	id, err := strconv.Atoi(tabUrl[len(tabUrl)-1])
 
 	if id < 1 || id > 52 || err != nil {
@@ -72,7 +77,7 @@ func ViewArtist(w http.ResponseWriter, r *http.Request) {
 	if id > 0 {
 		id = id - 1
 	}
-	if r.Method != "GET" {
+	if r.Method != "GET" && r.Method != "POST" {
 		Handle405Error(w)
 		return
 	}
@@ -113,6 +118,22 @@ func ViewArtist(w http.ResponseWriter, r *http.Request) {
 	tmpl.ExecuteTemplate(w, "header", DataExec1)
 	tmpl.ExecuteTemplate(w, "viewArtist", DataExec)
 
+}
+
+func Recherche(w http.ResponseWriter, str string) []models.Artist {
+	result := []models.Artist{}
+	for _, artist := range utils.Artists {
+		if strings.HasPrefix(strings.ToLower(artist.Name), strings.ToLower(str)) || strings.HasPrefix(strings.ToLower(artist.FirstAlbum), strings.ToLower(str)) || strings.HasPrefix(strings.ToLower(strconv.Itoa(artist.CreationDate)), strings.ToLower(str)) || strings.HasPrefix(strings.ToLower(artist.FirstAlbum), strings.ToLower(str)) {
+			result = append(result, artist)
+		}
+		for _, v := range artist.Members {
+			if strings.Contains(strings.ToLower(v), strings.ToLower(str)) {
+				result = append(result, artist)
+
+			}
+		}
+	}
+	return result
 }
 
 func FetchApi(w http.ResponseWriter, r *http.Request) {
@@ -158,6 +179,7 @@ func Handle500Error(w http.ResponseWriter) {
 }
 
 func ErrorPages(w http.ResponseWriter, data map[string]interface{}) {
-	tmpl := template.Must(template.ParseFiles("templates/error.html"))
-	tmpl.Execute(w, data)
+	tmpl := template.Must(template.ParseGlob("templates/*.html"))
+	tmpl.ExecuteTemplate(w, "header", data)
+	tmpl.ExecuteTemplate(w, "error", data)
 }
