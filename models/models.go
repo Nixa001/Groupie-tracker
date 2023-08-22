@@ -12,18 +12,6 @@ type Artist struct {
 	RelationsUrl    string   `json:"relations"`
 }
 
-// type artist interface{
-// 	id              int
-// 	image           string
-// 	name            string
-// 	members         string
-// 	creationDate    int
-// 	firstAlbum      string
-// 	locationUrl     string
-// 	concertDates string
-// 	relations    string
-// }
-
 type Location struct {
 	ID       int      `json:"id"`
 	Location []string `json:"locations"`
